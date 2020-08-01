@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+<title>template</title>
+<link href="../../../_common/css/style.css" rel="stylesheet" type="text/css">
+<style>
+.timer {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
+.timer span {
+  font-size: 72px;
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-contents">
+<h1>タイトル</h1>
+<h2>サブタイトル</h2>
+</div><!-- /.header-contents -->
+</header>
+<div class="main-wrapper">
+<section>
+  <h2><span>知ってました？</span><br>
+    2025年大阪万博開催まで</h2>
+  <p class="timer">あと<span id="day"></span>日<span id="hour"></span>時間<span id="min"></span>分<span id="sec"></span>秒</p>
+  </h2>
+</section>
+</div><!-- /.main-wrapper -->
+<footer>JavaScript Samples</footer>
+<script>
+'use strict';
+
+function countdown(due) {
+  const now = new Date();
+
+  const rest = due.getTime() - now.getTime();
+  const sec = Math.floor(rest / 1000) % 60;
+  const min = Math.floor(rest / 1000 / 60) % 60;
+  const hours = Math.floor(rest / 1000 / 60 / 60) % 24;
+  const days = Math.floor(rest / 1000 / 60 / 60 / 24);
+  const count = [days, hours, min, sec];
+
+  return count;
+}
+
+let goal = new Date(2025, 4, 3);
+
+console.log(countdown(goal));
+function recalc() {
+  const counter = countdown(goal);
+  document.getElementById('day').textContent = counter[0];
+  document.getElementById('hour').textContent = counter[1];
+  document.getElementById('min').textContent = String(counter[2]).padStart(2, '0');
+  document.getElementById('sec').textContent = String(counter[3]).padStart(2, '0');  
+  refresh();
+}
+
+function refresh() {
+  setTimeout(recalc, 1000);
+}
+recalc();
+</script>
+</body>
+</html>
